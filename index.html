@@ -8,9 +8,12 @@
       font-family: sans-serif;
 
     }
-    .task{ background: #5c5cbb; color: #f2f2f2; float: left; border-radius: 3px; overflow: hidden;margin: 1px; }
+    .task{ background: #5c5cbb; color: #f2f2f2; float: left; border-radius: 3px; overflow: hidden;margin: 1px; border:solid 1px #5050a7; }
     .task-title{ background: #5050a7; padding: 6px 8px; font-size: 16px; font-weight: bold; }
     .task-details{ font-size: 12px; padding: 6px 8px; }
+    .task-actions{ border-top: solid 1px #7a7ace; font-size: 10px; float: right; width: 100%; text-align: right; }
+    .task-chit{ transform: scale(.5); transition: all .3s; }
+    .task-chit:hover{ transform: scale(.8) }
     </style>
     <script type="text/javascript">
     "use strict"
@@ -33,8 +36,12 @@
       this.status = statusPending;
       this.label = [];
       this.creator = creator;
-      this.getDom = function() {
-        const fragment = document.getElementById('task').content.cloneNode(true);
+      this.getCard = function() {
+        const fragment = document.getElementById('task-card').content.cloneNode(true);
+        return fragment;
+      }
+      this.getChit = function() {
+        const fragment = document.getElementById('task-chit').content.cloneNode(true);
         return fragment;
       }
       return true;
@@ -50,11 +57,26 @@
       this.title = title?title:"No title";
       this.creator = creator?creator:new person();
     }
+
     </script>
   </head>
   <body>
-    <template id="task">
-      <div class="task">
+    <template id="task-card">
+      <div class="task task-card">
+        <div class="task-title">
+          Task name
+        </div>
+        <div class="task-details">
+          Task details
+        </div>
+        <div class="task-actions">
+          Task actions
+        </div>
+      </div>
+    </template>
+
+    <template id="task-chit">
+      <div class="task task-chit">
         <div class="task-title">
           Task name
         </div>
@@ -68,4 +90,8 @@
     </template>
 
   </body>
+  <script type="text/javascript">
+    document.body.appendChild(new task(1).getCard());
+    document.body.appendChild(new task(1).getChit());
+  </script>
 </html>
