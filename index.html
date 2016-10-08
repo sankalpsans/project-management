@@ -12,8 +12,11 @@
     .task-title{ background: #5050a7; padding: 6px 8px; font-size: 16px; font-weight: bold; }
     .task-details{ font-size: 12px; padding: 6px 8px; }
     .task-actions{ border-top: solid 1px #7a7ace; font-size: 10px; float: right; width: 100%; text-align: right; }
-    .task-chit{ transform: scale(.5); transition: all .3s; }
-    .task-chit:hover{ transform: scale(.8) }
+    .chit{ transform: scale(.5); transition: all .2s; }
+    .chit:hover{ transform: scale(.8) }
+    .person{ float: left; background: #4db37f; border-radius: 14px; color: #f2f2f2; margin: 1px; border: solid 1px #4db37f; }
+    .person-name{ font-weight: bold; padding: 4px 7px; }
+    .person .email{ font-size: 10px;padding: 4px 7px; olor: #c4efd9; }
     </style>
     <script type="text/javascript">
     "use strict"
@@ -25,7 +28,7 @@
     var labels = [];
 
 
-    function task(creator) {
+    function Task(creator) {
       if(creator === undefined) {
         this.error = "No creator of this task";
         return;
@@ -47,13 +50,22 @@
       return true;
     }
 
-    function person(name, email, id) {
+    function Person(name, email, id) {
       this.name = name?name:"No name";
       this.email = email?email:"No email";
       this.ID = id?id:0;
+      this.getCard = function() {
+        const fragment = document.getElementById('person-card').content.cloneNode(true);
+        return fragment;
+      }
+      this.getChit = function() {
+        const fragment = document.getElementById('person-chit').content.cloneNode(true);
+        return fragment;
+      }
       return true;
     }
-    function label(title, creator) {
+
+    function Label(title, creator) {
       this.title = title?title:"No title";
       this.creator = creator?creator:new person();
     }
@@ -76,7 +88,7 @@
     </template>
 
     <template id="task-chit">
-      <div class="task task-chit">
+      <div class="task chit">
         <div class="task-title">
           Task name
         </div>
@@ -89,9 +101,33 @@
       </div>
     </template>
 
+    <template id="person-card">
+      <div class="person">
+        <div class="person-name">
+          Person Name
+        </div>
+        <div class="email">
+          person@org.com
+        </div>
+      </div>
+    </template>
+
+    <template id="person-chit">
+      <div class="person chit">
+        <div class="person-name">
+          Person Name
+        </div>
+        <div class="email">
+          person@org.com
+        </div>
+      </div>
+    </template>
+
   </body>
   <script type="text/javascript">
-    document.body.appendChild(new task(1).getCard());
-    document.body.appendChild(new task(1).getChit());
+    document.body.appendChild(new Task(1).getCard());
+    document.body.appendChild(new Task(1).getChit());
+    document.body.appendChild(new Person("Jason Bourne", "sankalp@sportskeeda.com", 82).getCard());
+    document.body.appendChild(new Person("Jason Bourne", "sankalp@sportskeeda.com", 82).getChit());
   </script>
 </html>
